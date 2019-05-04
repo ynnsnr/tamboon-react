@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import fetch from 'isomorphic-fetch';
-
 import { summaryDonations } from '../helpers';
-
 import CardList from '../containers/card_list';
-import handlePay from '../actions/index';
-
+import { handlePay, updateTotalDonate, setCharities, setAmounts, selectAmount, hideAlert } from '../actions/index';
 import SweetAlert from 'sweetalert-react';
 import 'sweetalert/dist/sweetalert.css';
 
@@ -26,43 +23,34 @@ export default connect((state) => state)(
   class App extends Component {
     constructor(props) {
       super();
-
-      this.state = {
-        charities: [],
-        selectedAmount: 10,
-        showModal: [],
-        show: false,
-      };
     }
 
     componentDidMount() {
       fetch('http://localhost:3001/charities')
         .then((resp) => { return resp.json(); })
         .then((data) => {
-          this.setState({
-            charities: data,
-            showModal: Array(data.length).fill(false),
-          }) });
+          setCharities.call(this, data);
+          setAmounts.call(this, Array(data.length).fill(false))
+        });
 
       fetch('http://localhost:3001/payments')
         .then((resp) => { return resp.json() })
         .then((data) => {
-          this.props.dispatch({
-            type: 'UPDATE_TOTAL_DONATE',
-            amount: summaryDonations(data.map((item) => (item.amount))),
-          });
+          const amount = summaryDonations(data.map(item => item.amount));
+          updateTotalDonate.call(this, amount);
         })
     }
 
     donate = (index) => {
-      const arr = this.state.showModal.map((value) => false);
+      const arr = this.props.amounts.map((value) => false);
       arr[index] = true;
-      this.setState({ showModal: arr })
+      setAmounts.call(this, arr);
+      selectAmount.call(this, 10)
     }
 
     closeModal = () => {
-      const arr = this.state.showModal.map((value) => false);
-      this.setState({ showModal: arr })
+      const arr = this.props.amounts.map((value) => false);
+      setAmounts.call(this, arr);
     }
 
     renderModal = (item, index) => {
@@ -73,12 +61,12 @@ export default connect((state) => state)(
             name="payment"
             defaultChecked={ amount === 10 ? true : false }
             onClick={() => {
-              this.setState({ selectedAmount: amount })
+              selectAmount.call(this, amount)
             }} /> {amount}
         </label>
       ));
 
-      if (this.state.showModal[index] == true) {
+      if (this.props.amounts[index] === true) {
         return (
           <div className="overlay">
             <button className="close" onClick={() => this.closeModal()}>
@@ -89,11 +77,11 @@ export default connect((state) => state)(
                 <div>Select the amount to donate (THB)</div>
                 {payments}
                 <div>
-                  <a onClick={() => this.setState({ show: true })}>
+                  <a>
                     <button className="btn btn-outline-primary" onClick={
                       handlePay.call(this,
                         item.id,
-                        this.state.selectedAmount,
+                        this.props.selectedAmount,
                         item.currency,
                         item.name)}>Pay
                     </button>
@@ -102,11 +90,11 @@ export default connect((state) => state)(
               </div>
             </div>
             <SweetAlert
-              show={this.state.show}
+              show={this.props.showAlert}
               confirmButtonText="Close"
               title="Thanks!"
               text={this.props.message}
-              onConfirm={() => this.setState({ show: false })}
+              onConfirm={hideAlert.call(this)}
             />
           </div>
         );
@@ -129,7 +117,7 @@ export default connect((state) => state)(
                 </h6>
               </button>
             </div>
-            <CardList charities={this.state.charities}
+            <CardList charities={this.props.charities}
               renderModal={this.renderModal}
               donate={this.donate}
             />
