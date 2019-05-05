@@ -6,6 +6,7 @@ describe('helpers', () => {
   });
 });
 
+import 'raf/polyfill';
 
 import React from 'react';
 import Card from '../containers/card';
