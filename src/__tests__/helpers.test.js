@@ -1,4 +1,13 @@
+import 'raf/polyfill';
 import { summaryDonations } from '../helpers';
+import React from 'react';
+import Card from '../containers/card';
+import Enzyme from 'enzyme'
+import { mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import { selectAmount } from '../actions/index';
+
+Enzyme.configure({ adapter: new Adapter() })
 
 describe('helpers', () => {
   test('`summaryDonations` should calculate donations correctly', () => {
@@ -6,14 +15,6 @@ describe('helpers', () => {
   });
 });
 
-import 'raf/polyfill';
-
-import React from 'react';
-import Card from '../containers/card';
-import { mount } from 'enzyme';
-import Enzyme from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-Enzyme.configure({ adapter: new Adapter() })
 
 describe('Card\'s name', () => {
   test('Card component should render the charity\'s name', () => {
