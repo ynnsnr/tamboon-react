@@ -3,7 +3,6 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
-import reduxPromise from 'redux-promise';
 
 // internal modules
 import App from './components/App';
@@ -15,6 +14,7 @@ import updateMessageReducer from './reducers/update_message_reducer';
 import alertReducer from './reducers/alert_reducer';
 import showAmountsReducer from './reducers/show_amounts_reducer';
 import selectAmountReducer from './reducers/select_amount_reducer';
+import fetchFailReducer from './reducers/fetch_fail_reducer';
 
 const reducers = combineReducers({
   donate: updateTotalDonateReducer,
@@ -23,6 +23,7 @@ const reducers = combineReducers({
   amounts: showAmountsReducer,
   selectedAmount: selectAmountReducer,
   showAlert: alertReducer,
+  errors: fetchFailReducer,
 });
 
 const initialState = {
@@ -32,6 +33,7 @@ const initialState = {
   amounts: [],
   selectedAmount: 0,
   showAlert: false,
+  errors: [],
 };
 
 const store = createStore(

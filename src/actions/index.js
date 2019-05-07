@@ -4,6 +4,7 @@ export const UPDATE_TOTAL_DONATE = 'UPDATE_TOTAL_DONATE';
 export const SET_CHARITIES = 'SET_CHARITIES';
 export const SHOW_AMOUNTS = 'SHOW_AMOUNTS';
 export const SELECT_AMOUNT = 'SELECT_AMOUNT';
+export const FETCH_FAIL = 'FETCH_FAIL';
 
 export function updateMessage(message) {
   return { type: UPDATE_MESSAGE, message }
@@ -27,4 +28,8 @@ export function showAmounts(amounts) {
 
 export function selectAmount(amount) {
   return { type: SELECT_AMOUNT, amount };
+}
+
+export function fetchFail(errorMessage) {
+  return { type: FETCH_FAIL, errorMessage };
 }

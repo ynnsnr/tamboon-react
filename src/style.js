@@ -50,3 +50,28 @@ export const CardContent = styled.div`
     transition: opacity .5s;
   }
 `;
+
+export const ErrorBoundaryContent = styled.div`
+.MainTitle {
+  display: block;
+  font-size: 2rem;
+  font-weight: lighter;
+  text-align: center;
+}
+.MainDescription {
+  max-width: 50%;
+  font-size: 1.2rem;
+  font-weight: lighter;
+}
+.Cog {
+  width: 10rem;
+  height: 10rem;
+  fill: #6AAFE6;
+  transition: easeInOutQuint();
+  animation: CogAnimation 5s infinite;
+}
+@keyframes CogAnimation {
+    0%   {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+}
+`;

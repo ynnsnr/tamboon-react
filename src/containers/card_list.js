@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateTotalDonate, setCharities, showAmounts, toggleAlert } from '../actions';
+import { updateTotalDonate, setCharities, showAmounts, toggleAlert, fetchFail } from '../actions';
 import { summaryDonations } from '../helpers';
 import Card from './card';
 import SweetAlert from 'sweetalert-react';
@@ -14,13 +14,17 @@ class CardList extends Component {
       .then((data) => {
         this.props.setCharities(data);
         this.props.showAmounts(Array(data.length).fill(false));
+      }).catch(() => {
+        this.props.fetchFail('Check your internet connection and try again.')
       });
     fetch('http://localhost:3001/payments')
       .then((resp) => { return resp.json() })
       .then((data) => {
         const amount = summaryDonations(data.map(item => item.amount));
         this.props.updateTotalDonate(amount);
-      })
+      }).catch(() => {
+
+      });
   }
 
   render () {
@@ -49,13 +53,13 @@ function mapStateToProps(state) {
   return {
     charities: state.charities,
     message: state.message,
-    showAlert: state.showAlert
+    showAlert: state.showAlert,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    updateTotalDonate, setCharities, showAmounts, toggleAlert
+    updateTotalDonate, setCharities, showAmounts, toggleAlert, fetchFail,
   }, dispatch);
 }
 

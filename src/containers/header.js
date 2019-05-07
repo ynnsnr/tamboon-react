@@ -24,7 +24,7 @@ class Header extends Component {
 
 function mapStateToProps(state) {
   return {
-    donate: state.donate
+    donate: state.donate,
   };
 }
 

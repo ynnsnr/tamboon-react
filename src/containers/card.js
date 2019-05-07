@@ -19,12 +19,12 @@ class Card extends Component {
       body: JSON.stringify({ charitiesId: id, amount, currency }),
       headers: {'Content-Type': 'application/json'},
     })
-    .then((resp) => { return resp.json() })
-    .then(() => {
-      this.props.updateTotalDonate(amount);
-      this.props.toggleAlert(true);
-      this.props.updateMessage(`You've just donated ${amount}THB to ${name}!`);
-    });
+      .then((resp) => { return resp.json() })
+      .then(() => {
+        this.props.updateTotalDonate(amount);
+        this.props.toggleAlert(true);
+        this.props.updateMessage(`You've just donated ${amount}THB to ${name}!`);
+      });
   }
 
   renderModal = (item, index) => {
@@ -99,13 +99,13 @@ function mapStateToProps(state) {
   return {
     message: state.message,
     amounts: state.amounts,
-    selectedAmount: state.selectedAmount
+    selectedAmount: state.selectedAmount,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    updateTotalDonate, showAmounts, selectAmount, toggleAlert, updateMessage
+    updateTotalDonate, showAmounts, selectAmount, toggleAlert, updateMessage,
   }, dispatch);
 }
 
