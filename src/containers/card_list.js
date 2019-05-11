@@ -7,7 +7,7 @@ import Card from './card';
 import SweetAlert from 'sweetalert-react';
 import 'sweetalert/dist/sweetalert.css';
 
-class CardList extends Component {
+export class CardList extends Component {
   componentDidMount() {
     fetch('http://localhost:3001/charities')
       .then((resp) => { return resp.json() })

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { HeaderContent } from '../style';
 
-class Header extends Component {
+export class Header extends Component {
   render() {
     return (
       <HeaderContent>
