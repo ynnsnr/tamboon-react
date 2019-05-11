@@ -10,6 +10,13 @@ import { Header } from '../containers/header'
 // import { CardList } from '../containers/card_list'
 import { updateMessage, toggleAlert, updateTotalDonate, setCharities, showAmounts, selectAmount, fetchFail } from '../actions';
 import { UPDATE_MESSAGE, SHOW_ALERT, UPDATE_TOTAL_DONATE, SET_CHARITIES, SHOW_AMOUNTS, SELECT_AMOUNT, FETCH_FAIL } from '../actions';
+import charitiesReducer from '../reducers/charities_reducer';
+import updateTotalDonateReducer from '../reducers/update_total_donate_reducer';
+import updateMessageReducer from '../reducers/update_message_reducer';
+import alertReducer from '../reducers/alert_reducer';
+import showAmountsReducer from '../reducers/show_amounts_reducer';
+import selectAmountReducer from '../reducers/select_amount_reducer';
+import fetchFailReducer from '../reducers/fetch_fail_reducer';
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -30,8 +37,9 @@ const charities = [{
   image: 'habitat-for-humanity-thailand.jpg',
   currency: 'THB',
 }]
-
 const amounts = [10, 20, 50, 100, 500]
+const message = 'You\'ve just donated 100THB!'
+const errorMessage = 'Check your internet connection and try again.'
 
 describe('components', () => {
   describe('App', () => {
@@ -91,37 +99,87 @@ describe('components', () => {
 })
 
 describe('actions', () => {
-  it('should show the alert modal', () => {
-    const boolean = true
-    const expectedAction = { type: SHOW_ALERT, payload: boolean }
-    expect(toggleAlert(boolean)).toEqual(expectedAction)
+  describe('toggleAlert', () => {
+    it('should show the alert modal', () => {
+      const boolean = true
+      const expectedAction = { type: SHOW_ALERT, payload: boolean }
+      expect(toggleAlert(boolean)).toEqual(expectedAction)
+    })
   })
-  it('should update the alert message', () => {
-    const message = 'You\'ve just donated 100THB!'
-    const expectedAction = { type: UPDATE_MESSAGE, message }
-    expect(updateMessage(message)).toEqual(expectedAction)
+  describe('updateMessage', () => {
+    it('should update the alert message', () => {
+      const expectedAction = { type: UPDATE_MESSAGE, message }
+      expect(updateMessage(message)).toEqual(expectedAction)
+    })
   })
-  it('should update the total donations', () => {
-    const amount = 100
-    const expectedAction = { type: UPDATE_TOTAL_DONATE, amount }
-    expect(updateTotalDonate(amount)).toEqual(expectedAction)
+  describe('updateTotalDonate', () => {
+    it('should update the total donations', () => {
+      const amount = 100
+      const expectedAction = { type: UPDATE_TOTAL_DONATE, amount }
+      expect(updateTotalDonate(amount)).toEqual(expectedAction)
+    })
   })
-  it('should set the charities', () => {
-    const expectedAction = { type: SET_CHARITIES, charities }
-    expect(setCharities(charities)).toEqual(expectedAction)
+  describe('setCharities', () => {
+    it('should set the charities', () => {
+      const expectedAction = { type: SET_CHARITIES, charities }
+      expect(setCharities(charities)).toEqual(expectedAction)
+    })
   })
-  it('should display the amounts', () => {
-    const expectedAction = { type: SHOW_AMOUNTS, amounts }
-    expect(showAmounts(amounts)).toEqual(expectedAction)
+  describe('showAmounts', () => {
+    it('should display the amounts', () => {
+      const expectedAction = { type: SHOW_AMOUNTS, amounts }
+      expect(showAmounts(amounts)).toEqual(expectedAction)
+    })
   })
-  it('should select an amount', () => {
-    const amount = 100
-    const expectedAction = { type: SELECT_AMOUNT, amount }
-    expect(selectAmount(amount)).toEqual(expectedAction)
+  describe('selectAmount', () => {
+    it('should select an amount', () => {
+      const amount = 100
+      const expectedAction = { type: SELECT_AMOUNT, amount }
+      expect(selectAmount(amount)).toEqual(expectedAction)
+    })
   })
-  it('should display an error message', () => {
-    const errorMessage = 'Check your internet connection and try again.'
-    const expectedAction = { type: FETCH_FAIL, errorMessage }
-    expect(fetchFail(errorMessage)).toEqual(expectedAction)
+  describe('fetchFail', () => {
+    it('should display an error message', () => {
+      const expectedAction = { type: FETCH_FAIL, errorMessage }
+      expect(fetchFail(errorMessage)).toEqual(expectedAction)
+    })
+  })
+})
+
+describe('reducers', () => {
+  describe('alertReducer', () => {
+    it('should show the alert modal', () => {
+      expect(alertReducer(false, toggleAlert(true))).toEqual(true)
+    })
+  })
+  describe('charitiesReducer', () => {
+    it('should set the charities', () => {
+      expect(charitiesReducer([], setCharities(charities))).toEqual(charities)
+    })
+  })
+  describe('fetchFailReducer', () => {
+    it('should display an error message', () => {
+      expect(fetchFailReducer([], fetchFail(errorMessage))).toEqual([errorMessage])
+    })
+  })
+  describe('selectAmountReducer', () => {
+    it('should select an amount', () => {
+      expect(selectAmountReducer(10, selectAmount(100))).toEqual(100)
+    })
+  })
+  describe('showAmountsReducer', () => {
+    it('should display the amounts', () => {
+      expect(showAmountsReducer([], showAmounts(amounts))).toEqual(amounts)
+    })
+  })
+  describe('updateMessageReducer', () => {
+    it('should update the alert message', () => {
+      expect(updateMessageReducer('', updateMessage(message))).toEqual(message)
+    })
+  })
+  describe('updateTotalDonateReducer', () => {
+    it('should update the total donations', () => {
+      expect(updateTotalDonateReducer(1180, updateTotalDonate(20))).toEqual(1200)
+    })
   })
 })
