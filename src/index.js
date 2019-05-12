@@ -8,23 +8,9 @@ import { createStore, combineReducers } from 'redux';
 import App from './components/App';
 
 // State and reducers
-import charitiesReducer from './reducers/charities_reducer';
-import updateTotalDonateReducer from './reducers/update_total_donate_reducer';
-import updateMessageReducer from './reducers/update_message_reducer';
-import alertReducer from './reducers/alert_reducer';
-import showAmountsReducer from './reducers/show_amounts_reducer';
-import selectAmountReducer from './reducers/select_amount_reducer';
-import fetchFailReducer from './reducers/fetch_fail_reducer';
+import reducers from './reducers';
 
-const reducers = combineReducers({
-  donate: updateTotalDonateReducer,
-  message: updateMessageReducer,
-  charities: charitiesReducer,
-  amounts: showAmountsReducer,
-  selectedAmount: selectAmountReducer,
-  showAlert: alertReducer,
-  errors: fetchFailReducer,
-});
+const combinedReducers = combineReducers(reducers);
 
 const initialState = {
   donate: 0,
@@ -37,7 +23,7 @@ const initialState = {
 };
 
 const store = createStore(
-  reducers,
+  combinedReducers,
   initialState,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );

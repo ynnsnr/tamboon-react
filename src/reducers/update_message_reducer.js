@@ -1,4 +1,4 @@
-import { UPDATE_MESSAGE } from '../actions';
+import { UPDATE_MESSAGE } from '../constants/ActionTypes';
 
 export default function(state = null, action) {
   switch (action.type) {

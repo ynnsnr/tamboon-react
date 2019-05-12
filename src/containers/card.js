@@ -5,7 +5,7 @@ import { updateTotalDonate, showAmounts, selectAmount, toggleAlert, updateMessag
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { CardContent } from '../style';
 
-class Card extends Component {
+export class Card extends Component {
   donate = (index) => {
     const arr = this.props.amounts.map(value => false);
     arr[index] = true;
@@ -29,16 +29,16 @@ class Card extends Component {
 
   renderModal = (item, index) => {
     const payments = [10, 20, 50, 100, 500].map((amount, j) => (
-      <label key={j} className="btn">
-        <div className="d-flex align-items-center">
-          <input
-            type="radio"
-            name="payment"
-            defaultChecked={ amount === 10 ? true : false }
-            onClick={() => this.props.selectAmount(amount)}
-          />&nbsp;{amount}
-        </div>
-      </label>
+      <div key={j} className="md-radio">
+        <input
+          id={j}
+          type="radio"
+          name="payment"
+          defaultChecked={ amount === 10 ? true : false }
+          onClick={() => this.props.selectAmount(amount)}
+        />
+        <label htmlFor={j}>&nbsp;{amount}</label>
+      </div>
     ));
 
     if (this.props.amounts[index] === true) {
@@ -55,8 +55,8 @@ class Card extends Component {
             </button>
             <div className="donate">
               <div>
-                <div>Select the amount to donate (THB)</div>
-                {payments}
+                <h6>Select the amount to donate (THB)</h6>
+                <div className="d-flex">{payments}</div>
                 <div>
                   <button className="btn btn-outline-primary" onClick={() =>
                     this.handlePay(item.id, this.props.selectedAmount, item.currency, item.name)

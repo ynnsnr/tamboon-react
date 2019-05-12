@@ -7,7 +7,7 @@ import ErrorBoundary from '../containers/error_boundary';
 export default function App() {
   return (
     <Container>
-      <div className="container-fluid text-center">
+      <div className="text-center">
         <Header />
         <ErrorBoundary>
           <CardList />

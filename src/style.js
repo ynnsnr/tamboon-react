@@ -18,7 +18,6 @@ export const HeaderContent = styled.div`
   nav {
     width: 100%;
     top: 0;
-    left: 0;
     background: white;
     z-index: 1;
   }
@@ -35,10 +34,12 @@ export const HeaderContent = styled.div`
 export const CardContent = styled.div`
   margin: 30px 0;
   box-shadow: 0 6px 20px 0 rgba(0,0,0,.19);
+
   .image {
     height: 33vh;
     background-size: cover;
   }
+
   .overlay {
     position: absolute;
     height: 100%;
@@ -50,6 +51,7 @@ export const CardContent = styled.div`
     opacity: 1;
     transition: opacity 1s;
   }
+
   .donate {
     width: 100% !important;
     height: 70% !important;
@@ -66,6 +68,59 @@ export const CardContent = styled.div`
   .transition-appear.transition-appear-active {
     opacity: 1;
     transition: opacity .5s;
+  }
+
+  @keyframes ripple {
+    0% {
+      box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0);
+    }
+    50% {
+      box-shadow: 0px 0px 0px 15px rgba(0, 0, 0, 0.1);
+    }
+    100% {
+      box-shadow: 0px 0px 0px 15px rgba(0, 0, 0, 0);
+    }
+  }
+  .md-radio {
+    margin: 16px 8px 24px 8px;
+    input[type="radio"] {
+      display: none;
+    }
+    input[type="radio"]:checked + label:before {
+      border-color: #337ab7;
+      animation: ripple 0.2s linear forwards;
+    }
+    input[type="radio"]:checked + label:after {
+      transform: scale(1);
+    }
+    label {
+      display: inline;
+      position: relative;
+      padding: 1px 0 0 20px;
+      cursor: pointer;
+    }
+    label:before, label:after {
+      position: absolute;
+      content: "";
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      transition-property: transform, border-color;
+    }
+    label:before {
+      left: 0;
+      top: 0;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(0, 0, 0, 0.54);
+    }
+    label:after {
+      top: 5px;
+      left: 5px;
+      width: 10px;
+      height: 10px;
+      transform: scale(0);
+      background: #337ab7;
+    }
   }
 `;
 

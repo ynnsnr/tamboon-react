@@ -1,4 +1,4 @@
-import { FETCH_FAIL } from '../actions';
+import { FETCH_FAIL } from '../constants/ActionTypes';
 
 export default function(state = null, action) {
   switch (action.type) {

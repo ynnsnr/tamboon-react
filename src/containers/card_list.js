@@ -23,19 +23,17 @@ export class CardList extends Component {
         const amount = summaryDonations(data.map(item => item.amount));
         this.props.updateTotalDonate(amount);
       }).catch(() => {
-
+        this.props.fetchFail('Check your internet connection and try again.')
       });
   }
 
   render () {
     return (
-      <div>
+      <div className="container-fluid">
         <div className="row no-gutters">
-          {
-            this.props.charities.map((item, index) =>
-              <Card key={index} item={item} i={index} />
-            )
-          }
+          {this.props.charities.map((item, index) =>
+            <Card key={index} item={item} i={index} />
+          )}
         </div>
         <SweetAlert
           show={this.props.showAlert}

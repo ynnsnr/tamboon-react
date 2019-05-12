@@ -1,4 +1,4 @@
-import { SELECT_AMOUNT } from '../actions';
+import { SELECT_AMOUNT } from '../constants/ActionTypes';
 
 export default function(state = null, action) {
   switch (action.type) {

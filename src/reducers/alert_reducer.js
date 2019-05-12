@@ -1,4 +1,4 @@
-import { SHOW_ALERT } from '../actions';
+import { SHOW_ALERT } from '../constants/ActionTypes';
 
 export default function(state = null, action) {
   switch (action.type) {

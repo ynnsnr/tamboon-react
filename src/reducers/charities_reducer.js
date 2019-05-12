@@ -1,4 +1,4 @@
-import { SET_CHARITIES } from '../actions';
+import { SET_CHARITIES } from '../constants/ActionTypes';
 
 export default function(state = null, action) {
   switch (action.type) {
