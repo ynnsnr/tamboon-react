@@ -5,12 +5,30 @@ export const Container = styled.div`
 `;
 
 export const HeaderContent = styled.div`
+  img {
+    margin-bottom: 12px;
+  }
   h6 {
     margin: 1px 0 0 0;
   }
   .donations {
     pointer-events: none;
-    margin-top: 20px;
+    margin-top: 12px;
+  }
+  nav {
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: white;
+    z-index: 1;
+  }
+  .fixed-nav {
+    box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+    transition: box-shadow .3s;
+    position: fixed;
+    .donations {
+      margin-bottom: 12px;
+    }
   }
 `;
 

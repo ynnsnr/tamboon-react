@@ -41,6 +41,9 @@ const amounts = [10, 20, 50, 100, 500]
 const message = 'You\'ve just donated 100THB!'
 const errorMessage = 'Check your internet connection and try again.'
 
+jest.spyOn(document, 'querySelector')
+  .mockReturnValue({ addEventListener: jest.fn() })
+
 describe('components', () => {
   describe('App', () => {
     it('should render self and subcomponents', () => {
