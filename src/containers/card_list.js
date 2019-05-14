@@ -7,6 +7,7 @@ import Card from './card';
 
 export class CardList extends Component {
   componentDidMount() {
+    const errorMessage = 'Check your internet connection and try again.';
     fetch('http://localhost:3001/charities')
       .then(resp => resp.json())
       .then(data => {
@@ -14,7 +15,7 @@ export class CardList extends Component {
         this.props.setCharities(data);
         this.props.showAmounts(Array(data.length).fill(false));
       }).catch(() => {
-        this.props.fetchFail('Check your internet connection and try again.')
+        this.props.fetchFail(errorMessage);
       });
     fetch('http://localhost:3001/payments')
       .then(resp => resp.json())
@@ -22,7 +23,7 @@ export class CardList extends Component {
         const amount = summaryDonations(data.map(item => item.amount));
         this.props.updateTotalDonate(amount);
       }).catch(() => {
-        this.props.fetchFail('Check your internet connection and try again.')
+        this.props.fetchFail(errorMessage);
       });
   }
 

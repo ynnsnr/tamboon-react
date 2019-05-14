@@ -29,7 +29,7 @@ export class Header extends Component {
     return (
       <HeaderContent>
         <nav className={this.state.scroll > this.state.top ? 'fixed-nav' : ''}>
-          <img height="40" src="https://camo.githubusercontent.com/adbaf9d8c7a4bab9ad3685609955620ad32b64e8/68747470733a2f2f63646e2e6f6d6973652e636f2f6173736574732f6f6d6973652d6c6f676f2f6f6d6973652d776f72646d61726b2e706e67" />
+          <img height="40" src="images/omise.png" />
           <button className="btn btn-light donations">
             <h6>
               DONATIONS:&nbsp;
