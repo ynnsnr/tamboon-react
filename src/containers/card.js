@@ -35,7 +35,7 @@ export class Card extends Component {
         this.loading = false;
         setTimeout(() => {
           this.props.toggleAlert(true);
-        }, 1500);
+        }, 1000);
       });
   }
 
@@ -65,7 +65,7 @@ export class Card extends Component {
             <button className="close" onClick={() => this.closeModal()}>
               <span>&times;</span>
             </button>
-            <div className="donate">
+            <div className={'donate'+(this.loading ? ' opacity' : '')}>
               <div>
                 <h6>Select the amount to donate (THB)</h6>
                 <div className="d-flex">{payments}</div>
@@ -105,9 +105,7 @@ export class Card extends Component {
 
   render() {
     return (
-      <CardContent className={(this.loading ? ' opacity' : '') + `
-        card text-center col-xl-5 col-lg-5 col-md-5 col-sm-12 ml-auto mr-auto`
-      }>
+      <CardContent className="card text-center col-xl-5 col-lg-5 col-md-5 col-sm-12 ml-auto mr-auto">
         <div style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)),
           url('images/${this.props.item.image}')` }} className="image" />
         <div className="d-flex justify-content-between align-items-center">

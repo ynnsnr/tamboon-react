@@ -2,9 +2,6 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   padding: 16px 0 5vh 0;
-  .opacity {
-    opacity: 0.6;
-  }
 `;
 
 export const HeaderContent = styled.div`
@@ -50,6 +47,10 @@ export const CardContent = styled.div`
     }
     opacity: 1;
     transition: opacity 1s;
+  }
+
+  .opacity {
+    opacity: 0.4;
   }
 
   .donate {
