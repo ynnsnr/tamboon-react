@@ -1,33 +1,33 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  padding: 20px 0 5vh 0;
+  padding: 16px 0 5vh 0;
+  .opacity {
+    opacity: 0.6;
+  }
 `;
 
 export const HeaderContent = styled.div`
-  img {
-    margin-bottom: 12px;
-  }
   h6 {
     margin: 1px 0 0 0;
   }
   .donations {
     pointer-events: none;
-    margin-top: 12px;
   }
   nav {
     width: 100%;
     top: 0;
     background: white;
     z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 5vw;
   }
   .fixed-nav {
     box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
     transition: box-shadow .3s;
     position: fixed;
-    .donations {
-      margin-bottom: 12px;
-    }
   }
 `;
 

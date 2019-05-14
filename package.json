@@ -9,9 +9,10 @@
   "scripts": {
     "server": "json-server --watch db.json --port 3001",
     "client": "webpack-dev-server",
-    "test": "jest"
+    "test": "jest --verbose"
   },
   "dependencies": {
+    "@material-ui/core": "^3.9.3",
     "babel-eslint": "^10.0.1",
     "babel-plugin-css-modules-transform": "^1.6.2",
     "core-js": "^2.5.7",
