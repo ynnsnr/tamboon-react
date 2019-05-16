@@ -36,7 +36,7 @@ describe('components', () => {
       expect(wrapperCardList.dive().find('div').at(1).hasClass('row no-gutters')).toBe(true)
 
       const wrapperCard = wrapperCardList.dive().find('Connect(Card)').at(0).dive().dive()
-      expect(wrapperCard.find('div').at(2).text()).toBe(initialState.charities[0].name)
+      expect(wrapperCard.find('div.text-left').text()).toBe(initialState.charities[0].name)
     })
   })
 

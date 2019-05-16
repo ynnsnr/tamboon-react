@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateTotalDonate, showAmounts, selectAmount, toggleAlert, updateMessage, fetchFail } from '../actions';
+import { updateTotalDonate, showAmounts, selectAmount, toggleAlert, updateMessage, fetchFail, setPayments } from '../actions';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { CardContent } from '../style';
 import SweetAlert from 'sweetalert-react';
@@ -29,12 +29,18 @@ export class Card extends Component {
       headers: {'Content-Type': 'application/json'},
     })
       .then((resp) => { return resp.json() })
-      .then(() => {
-        this.props.updateTotalDonate(amount);
+      .then((data) => {
         this.props.updateMessage(`You've just donated ${amount}THB to ${name}!`);
         this.loading = false;
         setTimeout(() => {
           this.props.toggleAlert(true);
+          this.props.updateTotalDonate(amount);
+          fetch('http://localhost:3001/payments')
+            .then(resp => resp.json())
+            .then(data => { this.props.setPayments(data); })
+            .catch(() => {
+              this.props.fetchFail('Check your internet connection and try again.');
+            })
         }, 1000);
       }).catch(() => {
         this.props.fetchFail('Payment could not be processed. Please try again.');
@@ -108,6 +114,10 @@ export class Card extends Component {
   render() {
     return (
       <CardContent className="card text-center col-xl-5 col-lg-5 col-md-5 col-sm-12 ml-auto mr-auto">
+        <div className="payments">
+          <img src="images/hand-holding-usd.png" height="15" className="mr-1" />
+          <strong>{this.props.payments}</strong>
+        </div>
         <div style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)),
           url('images/${this.props.item.image}')` }} className="image" />
         <div className="d-flex justify-content-between align-items-center">
@@ -133,7 +143,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    updateTotalDonate, showAmounts, selectAmount, toggleAlert, updateMessage, fetchFail,
+    updateTotalDonate, showAmounts, selectAmount, toggleAlert, updateMessage, fetchFail, setPayments,
   }, dispatch);
 }
 

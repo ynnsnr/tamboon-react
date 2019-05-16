@@ -49,6 +49,17 @@ export const CardContent = styled.div`
     transition: opacity 1s;
   }
 
+  .payments {
+    position: absolute;
+    top: 14px;
+    right: 15px;
+    background-color: whitesmoke;
+    display: flex;
+    align-items: center;
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+
   .opacity {
     opacity: 0.4;
   }

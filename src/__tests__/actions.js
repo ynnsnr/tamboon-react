@@ -1,4 +1,4 @@
-import { charities, amounts, message, errorMessage } from '../constants/testsData'
+import { charities, amounts, message, errorMessage, payments } from '../constants/testsData'
 import * as actions from '../actions'
 import * as types from '../constants/ActionTypes'
 
@@ -46,6 +46,12 @@ describe('actions', () => {
     it('should display an error message', () => {
       const expectedAction = { type: types.FETCH_FAIL, errorMessage }
       expect(actions.fetchFail(errorMessage)).toEqual(expectedAction)
+    })
+  })
+  describe('setPayments', () => {
+    it('should update the payments', () => {
+      const expectedAction = { type: types.SET_PAYMENTS, payments }
+      expect(actions.setPayments(payments)).toEqual(expectedAction)
     })
   })
 })

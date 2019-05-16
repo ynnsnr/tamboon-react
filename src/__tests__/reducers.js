@@ -1,4 +1,4 @@
-import { charities, amounts, message, errorMessage } from '../constants/testsData'
+import { charities, amounts, message, errorMessage, payments } from '../constants/testsData'
 import * as actions from '../actions'
 import reducers from '../reducers'
 
@@ -36,6 +36,11 @@ describe('reducers', () => {
   describe('updateTotalDonateReducer', () => {
     it('should update the total donations', () => {
       expect(reducers.donate(1180, actions.updateTotalDonate(20))).toEqual(1200)
+    })
+  })
+  describe('setPaymentsReducer', () => {
+    it('should update the payments', () => {
+      expect(reducers.payments([], actions.setPayments(payments))).toEqual(payments)
     })
   })
 })

@@ -16,6 +16,7 @@ const initialState = {
   donate: 0,
   message: '',
   charities: [],
+  payments: [],
   amounts: [],
   selectedAmount: 0,
   showAlert: false,

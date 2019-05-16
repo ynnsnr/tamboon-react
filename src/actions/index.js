@@ -12,6 +12,10 @@ export function updateTotalDonate(amount) {
   return { type: types.UPDATE_TOTAL_DONATE, amount };
 }
 
+export function setPayments(payments) {
+  return { type: types.SET_PAYMENTS, payments };
+}
+
 export function setCharities(charities) {
   return { type: types.SET_CHARITIES, charities };
 }
