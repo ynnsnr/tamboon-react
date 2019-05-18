@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateTotalDonate, setCharities, showAmounts, fetchFail, setPayments } from '../actions';
-import { summaryDonations } from '../helpers';
+import { fetchPayments, setCharities, showAmounts, fetchFail } from '../actions';
 import Card from './card';
 
 export class CardList extends Component {
@@ -11,25 +10,17 @@ export class CardList extends Component {
   }
 
   componentDidMount() {
-    const errorMessage = 'Check your internet connection and try again.';
     fetch('http://localhost:3001/charities')
       .then(resp => resp.json())
       .then(data => {
         data.forEach(element => element.modal = false);
         this.props.setCharities(data);
         this.props.showAmounts(Array(data.length).fill(false));
-      }).catch(() => {
-        this.props.fetchFail(errorMessage);
+      })
+      .catch(() => {
+        this.props.fetchFail('Check your internet connection and try again.');
       });
-    fetch('http://localhost:3001/payments')
-      .then(resp => resp.json())
-      .then(data => {
-        const amount = summaryDonations(data.map(item => item.amount));
-        this.props.setPayments(data);
-        this.props.updateTotalDonate(amount);
-      }).catch(() => {
-        this.props.fetchFail(errorMessage);
-      });
+    this.props.fetchPayments();
   }
 
   payments = (i) => {
@@ -62,9 +53,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    updateTotalDonate, setCharities, showAmounts, fetchFail, setPayments
-  }, dispatch);
+  return bindActionCreators({ fetchPayments, setCharities, showAmounts, fetchFail }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardList);

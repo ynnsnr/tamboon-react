@@ -1,6 +1,12 @@
+import configureMockStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
+import fetchMock from 'fetch-mock'
 import { charities, amounts, message, errorMessage, payments } from '../constants/testsData'
 import * as actions from '../actions'
 import * as types from '../constants/ActionTypes'
+
+const middlewares = [thunk]
+const mockStore = configureMockStore(middlewares)
 
 describe('actions', () => {
   describe('toggleAlert', () => {
@@ -48,10 +54,20 @@ describe('actions', () => {
       expect(actions.fetchFail(errorMessage)).toEqual(expectedAction)
     })
   })
-  describe('setPayments', () => {
-    it('should update the payments', () => {
-      const expectedAction = { type: types.SET_PAYMENTS, payments }
-      expect(actions.setPayments(payments)).toEqual(expectedAction)
+  describe('fetchPayments', () => {
+    afterEach(() => { fetchMock.restore() })
+    it('should update the payments (async)', async () => {
+      fetchMock.mock('http://localhost:3001/payments', payments)
+
+      const expectedAction = [
+        { type: types.FETCH_PAYMENTS, payments },
+        { type: types.UPDATE_TOTAL_DONATE, amount: 30 },
+      ]
+      const store = mockStore({ payments: [] })
+
+      return store.dispatch(actions.fetchPayments()).then((resp) => {
+        expect(store.getActions()).toEqual(expectedAction)
+      })
     })
   })
 })

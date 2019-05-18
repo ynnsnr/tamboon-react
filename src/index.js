@@ -2,7 +2,9 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import reduxPromise from 'redux-promise';
+import thunk from 'redux-thunk';
 
 // internal modules
 import App from './components/App';
@@ -11,7 +13,6 @@ import App from './components/App';
 import reducers from './reducers';
 
 const combinedReducers = combineReducers(reducers);
-
 const initialState = {
   donate: 0,
   message: '',
@@ -23,10 +24,14 @@ const initialState = {
   errors: [],
 };
 
+// Middlewares
+const middlewares = applyMiddleware(reduxPromise, thunk);
+
 const store = createStore(
   combinedReducers,
   initialState,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  middlewares,
 );
 
 render(

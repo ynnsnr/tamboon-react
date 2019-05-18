@@ -1,5 +1,6 @@
 import { charities, amounts, message, errorMessage, payments } from '../constants/testsData'
 import * as actions from '../actions'
+import * as types from '../constants/ActionTypes'
 import reducers from '../reducers'
 
 describe('reducers', () => {
@@ -35,12 +36,12 @@ describe('reducers', () => {
   })
   describe('updateTotalDonateReducer', () => {
     it('should update the total donations', () => {
-      expect(reducers.donate(1180, actions.updateTotalDonate(20))).toEqual(1200)
+      expect(reducers.donate(1180, actions.updateTotalDonate(1200))).toEqual(1200)
     })
   })
-  describe('setPaymentsReducer', () => {
+  describe('fetchPaymentsReducer', () => {
     it('should update the payments', () => {
-      expect(reducers.payments([], actions.setPayments(payments))).toEqual(payments)
+      expect(reducers.payments([], { type: types.FETCH_PAYMENTS, payments })).toEqual(payments)
     })
   })
 })

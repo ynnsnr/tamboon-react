@@ -4,13 +4,19 @@ import { Provider } from 'react-redux'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import configureStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
 import App from '../components/app'
 import { Header } from '../containers/header'
-import { CardList } from '../containers/card_list'
+import CardList from '../containers/card_list'
 import { Card } from '../containers/card'
 import { charities, amounts } from '../constants/testsData'
 
 Enzyme.configure({ adapter: new Adapter() })
+
+const initialState = { donate: 0, charities, amounts }
+const middlewares = [thunk]
+const mockStore = configureStore(middlewares)
+const store = mockStore(initialState)
 
 jest.spyOn(document, 'querySelector')
   .mockReturnValue({ addEventListener: jest.fn() })
@@ -18,14 +24,6 @@ jest.spyOn(document, 'querySelector')
 describe('components', () => {
   describe('App', () => {
     it('should render self and subcomponents', () => {
-      const initialState = {
-        donate: 0,
-        charities,
-        amounts,
-      };
-      const mockStore = configureStore()
-      const store = mockStore(initialState)
-
       const wrapperApp = shallow(<Provider store={store}><App /></Provider>)
       expect(wrapperApp.dive().find('div').hasClass('text-center')).toBe(true)
 
@@ -50,16 +48,14 @@ describe('components', () => {
 
   describe('CardList', () => {
     it('should render self', () => {
-      const wrapper = shallow(<CardList charities={charities} />)
-      expect(wrapper.find('div').at(1).hasClass('row no-gutters')).toBe(true)
+      const wrapper = shallow((<Provider store={store}><CardList charities={charities} /></Provider>))
+      expect(wrapper.dive({context: {store}}).dive().find('div').at(1).hasClass('row no-gutters')).toBe(true)
     })
   })
 
   describe('Card', () => {
     test('should render self', () => {
-      const wrapper = shallow(
-        <Card item={charities[0]} amounts={amounts} />
-      );
+      const wrapper = shallow(<Card item={charities[0]} amounts={amounts} />);
       expect(wrapper.find('.text-left').text()).toBe(charities[0].name)
     });
   });

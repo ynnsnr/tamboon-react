@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateTotalDonate, showAmounts, selectAmount, toggleAlert, updateMessage, fetchFail, setPayments } from '../actions';
+import { fetchPayments, showAmounts, selectAmount, toggleAlert, updateMessage, fetchFail } from '../actions';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { CardContent } from '../style';
 import SweetAlert from 'sweetalert-react';
@@ -34,13 +34,7 @@ export class Card extends Component {
         this.loading = false;
         setTimeout(() => {
           this.props.toggleAlert(true);
-          this.props.updateTotalDonate(amount);
-          fetch('http://localhost:3001/payments')
-            .then(resp => resp.json())
-            .then(data => { this.props.setPayments(data); })
-            .catch(() => {
-              this.props.fetchFail('Check your internet connection and try again.');
-            })
+          this.props.fetchPayments();
         }, 1000);
       }).catch(() => {
         this.props.fetchFail('Payment could not be processed. Please try again.');
@@ -143,7 +137,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    updateTotalDonate, showAmounts, selectAmount, toggleAlert, updateMessage, fetchFail, setPayments,
+    fetchPayments, showAmounts, selectAmount, toggleAlert, updateMessage, fetchFail,
   }, dispatch);
 }
 
