@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchPayments, showAmounts, selectAmount, toggleAlert, updateMessage, fetchFail } from '../actions';
+import { showAmounts, selectAmount, handlePay, toggleAlert } from '../actions';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { CardContent } from '../style';
 import SweetAlert from 'sweetalert-react';
@@ -9,36 +9,11 @@ import 'sweetalert/dist/sweetalert.css';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 export class Card extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { loading: false };
-  }
-
   donate = (index) => {
     const arr = this.props.amounts.map(value => false);
     arr[index] = true;
     this.props.showAmounts(arr);
     this.props.selectAmount(10);
-  }
-
-  handlePay = (id, amount, currency, name) => {
-    this.loading = true;
-    fetch('http://localhost:3001/payments', {
-      method: 'POST',
-      body: JSON.stringify({ charitiesId: id, amount, currency }),
-      headers: {'Content-Type': 'application/json'},
-    })
-      .then((resp) => { return resp.json() })
-      .then((data) => {
-        this.props.updateMessage(`You've just donated ${amount}THB to ${name}!`);
-        this.loading = false;
-        setTimeout(() => {
-          this.props.toggleAlert(true);
-          this.props.fetchPayments();
-        }, 1000);
-      }).catch(() => {
-        this.props.fetchFail('Payment could not be processed. Please try again.');
-      });
   }
 
   renderModal = (item, index) => {
@@ -67,13 +42,13 @@ export class Card extends Component {
             <button className="close" onClick={() => this.closeModal()}>
               <span>&times;</span>
             </button>
-            <div className={'donate'+(this.loading ? ' opacity' : '')}>
+            <div className={'donate'+(this.props.loading ? ' opacity' : '')}>
               <div>
                 <h6>Select the amount to donate (THB)</h6>
                 <div className="d-flex">{payments}</div>
                 <div>
                   <button className="btn btn-outline-primary" onClick={() =>
-                    this.handlePay(item.id, this.props.selectedAmount, item.currency, item.name)
+                    this.props.handlePay(item.id, this.props.selectedAmount, item.currency, item.name)
                   }>
                     Pay
                   </button>
@@ -82,7 +57,7 @@ export class Card extends Component {
             </div>
           </ReactCSSTransitionGroup>
           <div style={{position: 'absolute', top: 'calc(50% - 26px)', left: 'calc(50% - 20px)'}}>
-            {this.loading ? <CircularProgress color="primary" /> : null}
+            {this.props.loading ? <CircularProgress color="primary" /> : null}
           </div>
           <SweetAlert
             show={this.props.showAlert}
@@ -132,12 +107,13 @@ function mapStateToProps(state) {
     amounts: state.amounts,
     selectedAmount: state.selectedAmount,
     showAlert: state.showAlert,
+    loading: state.loading,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    fetchPayments, showAmounts, selectAmount, toggleAlert, updateMessage, fetchFail,
+    showAmounts, selectAmount, handlePay, toggleAlert,
   }, dispatch);
 }
 
