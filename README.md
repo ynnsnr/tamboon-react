@@ -5,8 +5,9 @@
 </p>
 <br />
 
+## Preview
 
-**Tamboon React** is a code challenge for frontend developer.
+[https://tamboon-react.ynnsnr.now.sh](https://tamboon-react.ynnsnr.now.sh)
 
 ## Build the app
 
@@ -24,6 +25,7 @@ yarn client
 
 Project is now running at [http://localhost:3000](http://localhost:3000)
 
+You can throttle the network in Chrome DevTools to see how the app reacts.
 
 ## Tests
 
