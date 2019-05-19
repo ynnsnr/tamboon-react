@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchPayments, setCharities, showAmounts, fetchFail } from '../actions';
+import { fetchPayments, fetchCharities } from '../actions';
 import Card from './card';
 
 export class CardList extends Component {
@@ -10,16 +10,7 @@ export class CardList extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3001/charities')
-      .then(resp => resp.json())
-      .then(data => {
-        data.forEach(element => element.modal = false);
-        this.props.setCharities(data);
-        this.props.showAmounts(Array(data.length).fill(false));
-      })
-      .catch(() => {
-        this.props.fetchFail('Check your internet connection and try again.');
-      });
+    this.props.fetchCharities();
     this.props.fetchPayments();
   }
 
@@ -53,7 +44,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchPayments, setCharities, showAmounts, fetchFail }, dispatch);
+  return bindActionCreators({ fetchPayments, fetchCharities }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardList);

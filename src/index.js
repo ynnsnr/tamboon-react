@@ -3,7 +3,6 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import reduxPromise from 'redux-promise';
 import thunk from 'redux-thunk';
 
 // internal modules
@@ -22,10 +21,11 @@ const initialState = {
   selectedAmount: 0,
   showAlert: false,
   errors: [],
+  loading: false,
 };
 
 // Middlewares
-const middlewares = applyMiddleware(reduxPromise, thunk);
+const middlewares = applyMiddleware(thunk);
 
 const store = createStore(
   combinedReducers,
