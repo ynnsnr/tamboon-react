@@ -12,12 +12,15 @@
     "client": "webpack-dev-server",
     "test": "jest --verbose",
     "build": "webpack --config webpack.dev.js",
-    "now-build": "react-scripts build"
+    "now-build": "react-scripts build",
+    "start": "node server.js"
   },
   "dependencies": {
     "@material-ui/core": "^3.9.3",
+    "babel-loader": "^8.0.6",
     "babel-plugin-css-modules-transform": "^1.6.2",
     "core-js": "^2.5.7",
+    "dotenv": "^8.0.0",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",
     "fetch-mock": "^7.3.3",
@@ -27,15 +30,16 @@
     "react": "^16.0.0",
     "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^16.0.0",
-    "react-scripts": "2.1.1",
     "react-redux": "^5.0.6",
+    "react-scripts": "2.1.1",
     "react-transition-group": "^2.5.0",
     "redux": "^3.7.2",
     "redux-promise": "^0.6.0",
     "redux-thunk": "^2.3.0",
     "style-loader": "^0.23.1",
     "styled-components": "^2.4.1",
-    "sweetalert-react": "^0.4.11"
+    "sweetalert-react": "^0.4.11",
+    "webpack-dev-server": "^3.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.1.5",
