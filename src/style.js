@@ -11,6 +11,14 @@ export const HeaderContent = styled.div`
   .donations {
     pointer-events: none;
   }
+  .donations-title {
+    display: inline;
+  }
+  @media only screen and (max-width: 400px) {
+    .donations-title {
+      display: none;
+    }
+  }
   nav {
     width: 100%;
     top: 0;
@@ -20,6 +28,10 @@ export const HeaderContent = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 12px 5vw;
+    margin: 0;
+  }
+  image {
+    justify-content: center;
   }
   .fixed-nav {
     box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
@@ -132,6 +144,11 @@ export const CardContent = styled.div`
       height: 10px;
       transform: scale(0);
       background: #337ab7;
+    }
+  }
+  @media only screen and (max-width: 400px) {
+    .md-radio {
+      margin-right: 2px;
     }
   }
 `;

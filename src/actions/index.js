@@ -5,7 +5,7 @@ const errorMessage = 'Check your internet connection and try again.';
 
 export function fetchCharities() {
   return (dispatch) => {
-    const promise = fetch('http://localhost:3001/charities')
+    const promise = fetch(`${process.env.API_BASE_URL}/charities`)
       .then(resp => resp.json())
       .then(data => {
         dispatch(setCharities(data));
@@ -24,7 +24,7 @@ export function fetchCharities() {
 
 export function fetchPayments() {
   return (dispatch) => {
-    return fetch('http://localhost:3001/payments')
+    return fetch(`${process.env.API_BASE_URL}/payments`)
       .then(resp => resp.json())
       .then(payments => dispatch(setPayments(payments)))
       .then((action) => {
@@ -39,7 +39,7 @@ export function fetchPayments() {
 export function handlePay(id, amount, currency, name) {
   return (dispatch) => {
     dispatch(setLoading(true));
-    return fetch('http://localhost:3001/payments', {
+    return fetch(`${process.env.API_BASE_URL}/payments`, {
       method: 'POST',
       body: JSON.stringify({ charitiesId: id, amount, currency }),
       headers: {'Content-Type': 'application/json'},

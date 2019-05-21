@@ -54,7 +54,7 @@ describe('actions', () => {
       const store = mockStore({});
       const expectedAction = [{ type: types.SET_CHARITIES, charities }];
 
-      fetchMock.get('http://localhost:3001/charities', charities);
+      fetchMock.get(`${process.env.API_BASE_URL}/charities`, charities);
 
       return store.dispatch(actions.fetchCharities()).then((resp) => {
         expect(store.getActions()).toEqual(expectedAction);
@@ -78,7 +78,7 @@ describe('actions', () => {
         { type: types.UPDATE_TOTAL_DONATE, amount: 30 },
       ];
 
-      fetchMock.get('http://localhost:3001/payments', payments);
+      fetchMock.get(`${process.env.API_BASE_URL}/payments`, payments);
 
       return store.dispatch(actions.fetchPayments()).then((resp) => {
         expect(store.getActions()).toEqual(expectedAction);
@@ -108,8 +108,8 @@ describe('actions', () => {
         { type: types.UPDATE_TOTAL_DONATE, amount: 130 },
       ];
 
-      fetchMock.post('http://localhost:3001/payments', payment)
-        .get('http://localhost:3001/payments', payments.concat([payment]));
+      fetchMock.post(`${process.env.API_BASE_URL}/payments`, payment)
+        .get(`${process.env.API_BASE_URL}/payments`, payments.concat([payment]));
 
       return store.dispatch(actions.handlePay(1, amount, 'THB', charities[0].name))
         .then((resp) => {

@@ -32,7 +32,7 @@ export class Header extends Component {
           <img height="40" src="images/omise.png" />
           <button className="btn btn-light donations">
             <h6>
-              DONATIONS:&nbsp;
+              <span className="donations-title">DONATIONS:&nbsp;</span>
               <span className="badge badge-primary">
                 {this.props.donate}THB
               </span>
